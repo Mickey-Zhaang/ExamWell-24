@@ -4,9 +4,9 @@
 
 <h1> Overview of Exam Well </h1>
 
-<h2>Dependencies for /frontend<h2>
+<h2>Dependencies for /frontend</h2>
 
-frontend
+<h3>Frontend</h3>
 * @types/react-dom@18.3.0
 * @types/react@18.3.3
 * @vitejs/plugin-react@4.3.1
