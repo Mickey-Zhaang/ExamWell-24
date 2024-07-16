@@ -1,2 +1,5 @@
 # ExamWell-24
-Lolz
+
+<b><u>Authors:</u></b> Katie Bernard, Kingsford Sarpong, Mickey Zhang
+
+<h1> Overview of Exam Well </h1>
