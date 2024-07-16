@@ -1,0 +1,42 @@
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns the .home block to the top of the container */
+    justify-content: flex-start; /* Horizontally centers the .home block */
+    height: 100vh; /* Full height to ensure the container takes up the entire viewport height */
+    padding-top: 100px;
+  }
+  
+  .home {
+    background-color: #fff5f5;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 60%;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    
+    &__title {
+      font-size: 2.5em;
+      color: #395fc9;
+    }
+  
+    &__statement {
+      font-size: 1.2em;
+      color: #666;
+      margin-top: 20px;
+    }
+  }
+
+  .search_bar {
+    background-color: #ede8f0;
+    border-radius: 10px;
+    margin-top: 60px;
+    width: 250%;
+    height: 25px;
+    color: black;
+    transform: translateX(-28%); /* Center the search bar */
+    &::placeholder {
+      color: #b4b4b4; /* Change the placeholder text color */
+      font-style: italic; /* Optional: add italic style to placeholder text */
+    }
+  }
