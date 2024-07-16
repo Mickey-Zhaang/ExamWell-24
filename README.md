@@ -6,7 +6,7 @@
 
 <h2>Dependencies for /frontend<h2>
 
-frontend@0.0.0 C:\Users\micke\OneDrive\Desktop\ExamWell-24\frontend
+frontend
 ├── @types/react-dom@18.3.0
 ├── @types/react@18.3.3
 ├── @vitejs/plugin-react@4.3.1
