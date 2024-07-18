@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
+import axios from "axios";
 import "../Sass/HomeComponent.scss";
 
 const HomeComponent = () => {
+
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:5000/api/data")
+      .then(response => {
+        setMessage(response.data.message);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
+
+
   return (
     <div className="home-wrapper">
       <div className="home">
@@ -10,6 +25,9 @@ const HomeComponent = () => {
       </div>
       <div>
         <input className="search_bar" type="text" placeholder="What are you looking for?"/>
+        <div>
+          <p>{message}</p>
+        </div>
       </div>
     </div>
   );
