@@ -4,9 +4,10 @@
     align-items: center; /* Aligns the .home block to the top of the container */
     justify-content: flex-start; /* Horizontally centers the .home block */
     height: 100vh; /* Full height to ensure the container takes up the entire viewport height */
+    text-align: center;
     padding-top: 100px;
   }
-  
+
   .home {
     background-color: #fff5f5;
     padding: 30px;
@@ -25,18 +26,33 @@
       color: #666;
       margin-top: 20px;
     }
+    
   }
 
-  .search_bar {
-    background-color: #ede8f0;
-    border-radius: 10px;
-    margin-top: 60px;
-    width: 250%;
-    height: 25px;
-    color: black;
-    transform: translateX(-28%); /* Center the search bar */
-    &::placeholder {
-      color: #b4b4b4; /* Change the placeholder text color */
-      font-style: italic; /* Optional: add italic style to placeholder text */
+
+  .create__problem {
+    background-color: rgb(219, 219, 219); /* Background color */
+    color: rgb(179, 171, 171); /* Text color */
+    margin-top: 50px;
+    height: 10%;
+    width: 20%;
+    border-radius: 30px; /* Optional: Add rounded corners */
+    padding: 20px; /* Optional: Add padding */
+    cursor: pointer; /* Optional: Change cursor to pointer on hover */
+    transition: background-color 0.3s, color 0.3s; /* Optional: Add transition for color changes */
+    display: flex; /* Make the button a flex container */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+  
+    &:hover {
+      background-color: rgb(200, 200, 200); /* Optional: Background color on hover */
+      color: rgb(0, 0, 0); /* Optional: Text color on hover */
+    }
+  
+    .plus__sign {
+      font-size: 5em; /* Set the font size for the plus sign */
+      margin-rigt: 10px; /* Space between plus sign and text */
     }
   }
+  
+  
