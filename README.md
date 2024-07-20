@@ -4,7 +4,7 @@
 
 <h1> Overview of Exam Well </h1>
 
-<h2>Dependencies/h2>
+<h2>Dependencies </h2>
 
 * Flask@3.0.3
 * Flask-Cors@4.0.1
