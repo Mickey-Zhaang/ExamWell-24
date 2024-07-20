@@ -23,6 +23,9 @@
 <h2>How to Run</h2>
 
 * Ensure all requirements have been installed
+
+* `ctrl + shift + p` and find the python interpreter, change it to the virtual environment.
+
 * Once in /ExamWell-24 directory open terminal and type `cd backend` to move into /backend
 * run app.py thorugh `python app.py` and split the terminal into 2 becuase we need this server running
 * use the second terminal to change directories back to /ExamWell-24 with `cd ..` and move into /frontend through `cd frontend`
