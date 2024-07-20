@@ -4,8 +4,10 @@
 
 <h1> Overview of Exam Well </h1>
 
-<h2>Dependencies for /frontend</h2>
+<h2>Dependencies/h2>
 
+* Flask@3.0.3
+* Flask-Cors@4.0.1
 * @types/react-dom@18.3.0
 * @types/react@18.3.3
 * @vitejs/plugin-react@4.3.1
