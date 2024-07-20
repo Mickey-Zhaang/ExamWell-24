@@ -32,7 +32,7 @@ const HomeComponent = () => {
     <div className="home-wrapper">
       <div className="home">
         <h1 className="home__title">ExamWell</h1>
-        <p className="home__statement"><i>"Whether you're a teacher that is looking to facilitate the test creation process or a student that is looking to study better, ExamWell is the go-to tool for efficient education."</i></p>
+        <p className="home__statement"><i>"Efficient education achieved through the synergy of AI and human effort."</i></p>
      </div>
      <button className="create__problem" onClick={handleButtonClick}>
       <span className="plus__sign">+</span> 
