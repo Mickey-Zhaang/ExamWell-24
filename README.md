@@ -20,3 +20,10 @@
 * react@18.3.1
 * vite@5.3.4
 
+<h2>How to Run</h2>
+
+* Ensure all requirements have been installed
+* Once in /ExamWell-24 directory open terminal and type `cd backend` to move into /backend
+* run app.py thorugh `python app.py` and split the terminal into 2 becuase we need this server running
+* change directories back to /ExamWell-24 with `cd ..` and move into /frontend through `cd frontend`
+* there start the server with `npm run dev` and it should take you to the home page in your browser
