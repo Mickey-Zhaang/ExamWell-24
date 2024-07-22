@@ -23,3 +23,8 @@
 * run app.py thorugh `python app.py` and split the terminal into 2 becuase we need this server running
 * use the second terminal to change directories back to /ExamWell-24 with `cd ..` and move into /frontend through `cd frontend`
 * there start the server with `npm run dev` and it should take you to the home page in your browser
+
+
+<h2> How to keep up to date with the main branch </h2> 
+
+* run `git merge main` in the terminal to update your current directory with the one in github. This allows you to stay up to date.
