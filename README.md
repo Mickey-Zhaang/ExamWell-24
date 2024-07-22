@@ -6,11 +6,14 @@
 
 <h2>Handling NPM Dependencies</h2>
 
+* Download nodejs from here https://nodejs.org/en, and into your program files
+* ensure that you add the nodejs file into your environmental PATH variables (Ask GPT it can help)
 * run `npm install` in the terminal of /ExamWell-24 to install all dependencies for NPM,
 
 <h2>Backend python dependencies</h2>
 
-* run `pip install -r requirements.txt` in the terminal of /ExamWell-24 for all backend dependencies.
+* run `python3 -m venv .venv` in the terminal of /ExamWell-24
+* run `pip install -r requirements.txt` in the same terminal to install all backend dependencies.
 
 
 <h2>How to Run</h2>
