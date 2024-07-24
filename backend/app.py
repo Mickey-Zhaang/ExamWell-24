@@ -12,9 +12,24 @@ def get_button_message():
 @app.route('/api/submit', methods=['POST'])
 def submit():
     data = request.get_json()  # Get the JSON data from the request
-    # Process the data as needed
+    
+    json_formatted_data = process_data(data)
+    
     print(data)
     return jsonify({"message": "Form submitted successfully!"}), 200
+
+# to process data in there^^
+def process_data(data):
+    """Katie, process the data however you wish remember that data is a python dict
+
+        :param data: form submission data from frontend
+        :type data: dict
+        :returns: a processed format of the input data
+        :rtype: json
+        """
+    # Function implementation
+    return 0
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
