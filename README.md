@@ -27,4 +27,12 @@
 
 <h2> How to keep up to date with the main branch </h2> 
 
-* run `git pull origin main` in the terminal to update your current directory with the one in github. This allows you to stay up to date.
+* First run `git stash` to stash any uncommitted changes you have worked on
+
+* Check all your stashed changes with `git stash list`
+
+* Keep up to date with the main branch with `git pull origin main`
+
+* Apply any of ur changes with `git stash apply` if nothing major has been altered
+
+* Finally resolve any conflicts that may have arose from pulling
