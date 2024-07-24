@@ -5,11 +5,6 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    data = {"message": "Hello from Flask!"}
-    return jsonify(data)
-
 @app.route('/api/button-message', methods = ['GET'])
 def get_button_message():
     return jsonify({"message": "Button clicked. This is a message from Flask!"})
