@@ -27,4 +27,4 @@
 
 <h2> How to keep up to date with the main branch </h2> 
 
-* run `git fetch origin` in the terminal to update your current directory with the one in github. This allows you to stay up to date.
+* run `git pull origin main` in the terminal to update your current directory with the one in github. This allows you to stay up to date.
