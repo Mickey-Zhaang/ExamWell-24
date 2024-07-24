@@ -1,9 +1,8 @@
 from dotenv import load_dotenv
 import os
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain.llms import OpenAI
-from langchain import PromptTemplate
+from langchain.prompts import PromptTemplate
 
 load_dotenv()
 
