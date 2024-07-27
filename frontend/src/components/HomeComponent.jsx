@@ -36,6 +36,9 @@ const HomeComponent = () => {
     axios.post("http://127.0.0.1:5000/api/submit", data)
       .then(response => {
         console.log("Form submitted successfully:", response.data);
+        event.target.reset();
+        setSelectedDifficulty("");
+        setSelectedFormat("");
         // You can handle the response here
       })
       .catch(error => {
