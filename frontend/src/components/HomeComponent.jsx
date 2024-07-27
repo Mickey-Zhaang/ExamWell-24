@@ -69,13 +69,23 @@ const HomeComponent = () => {
             <h1 className="home__title">ExamWell</h1>
             <form onSubmit={handleSubmit} action="/submit" method="post" className="form-container">
               <div className="text-input-container">
-                <label htmlFor="subject">Subject/Topic:</label>
+                <label htmlFor="subject">Subject:</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   className="what_subject"
                   placeholder="Enter the subject"
+                  required
+                />
+                <div></div>
+                <label htmlFor="subject">Topic:</label>
+                <input
+                  type="text"
+                  id="topic"
+                  name="topic"
+                  className="what_topic"
+                  placeholder="Enter the topic"
                   required
                 />
                 <div></div>
@@ -89,6 +99,7 @@ const HomeComponent = () => {
                   required
                 />
               </div>
+              <h3>Difficulty:</h3>
               <div className="checkbox-container">
                 <label htmlFor="difficulty1">
                   <input 
@@ -119,6 +130,40 @@ const HomeComponent = () => {
                     checked={selectedDifficulty === "hard"} 
                     onChange={handleCheckboxChange}/>
                   Hard
+                </label>
+              </div>
+              <h3>Format of Question:</h3>
+
+              <div className="checkbox-container">
+                <label htmlFor="format1">
+                  <input 
+                    type="checkbox" 
+                    id="format1" 
+                    name="format" 
+                    value="multiple-choice" 
+                    checked={selectedDifficulty === "multiple-choice"} 
+                    onChange={handleCheckboxChange}/>
+                  multiple-choice
+                </label>
+                <label htmlFor="format2">
+                  <input 
+                    type="checkbox" 
+                    id="format2" 
+                    name="format" 
+                    value="short-answer" 
+                    checked={selectedDifficulty === "short-answer"} 
+                    onChange={handleCheckboxChange}/>
+                  short-answer
+                </label>
+                <label htmlFor="format3">
+                  <input 
+                    type="checkbox" 
+                    id="format3" 
+                    name="format" 
+                    value="free-response" 
+                    checked={selectedDifficulty === "free-response"} 
+                    onChange={handleCheckboxChange}/>
+                  free-response
                 </label>
               </div>
               <div className="additionals_container">

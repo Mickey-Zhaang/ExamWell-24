@@ -12,10 +12,9 @@ def get_button_message():
 @app.route('/api/submit', methods=['POST'])
 def submit():
     data = request.get_json()  # Get the JSON data from the request
-    
+    print(data)
     json_formatted_data = process_data(data)
     
-    print(data)
     return jsonify({"message": "Form submitted successfully!"}), 200
 
 # to process data in there^^
@@ -28,6 +27,7 @@ def process_data(data):
         :rtype: json
         """
     # Function implementation
+    
     return 0
     
 
