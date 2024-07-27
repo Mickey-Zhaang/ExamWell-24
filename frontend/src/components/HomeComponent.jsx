@@ -5,6 +5,8 @@ import "../Sass/HomeComponent.scss";
 const HomeComponent = () => {
 
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [selectedFormat, setSelectedFormat] = useState("");
+
   const [isWindowVisible, setIsWindowVisible] = useState(false);
 
 
@@ -41,8 +43,12 @@ const HomeComponent = () => {
       });
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleDifficultyCheckboxChange = (event) => {
     setSelectedDifficulty(event.target.value);
+  }
+
+  const handleFormatCheckboxChange = (event) => {
+    setSelectedFormat(event.target.value);
   }
 
 
@@ -108,7 +114,7 @@ const HomeComponent = () => {
                     name="difficulty" 
                     value="easy" 
                     checked={selectedDifficulty === "easy"} 
-                    onChange={handleCheckboxChange}/>
+                    onChange={handleDifficultyCheckboxChange}/>
                   Easy
                 </label>
                 <label htmlFor="difficulty2">
@@ -118,7 +124,7 @@ const HomeComponent = () => {
                     name="difficulty" 
                     value="medium" 
                     checked={selectedDifficulty === "medium"} 
-                    onChange={handleCheckboxChange}/>
+                    onChange={handleDifficultyCheckboxChange}/>
                   Medium
                 </label>
                 <label htmlFor="difficulty3">
@@ -128,7 +134,7 @@ const HomeComponent = () => {
                     name="difficulty" 
                     value="hard" 
                     checked={selectedDifficulty === "hard"} 
-                    onChange={handleCheckboxChange}/>
+                    onChange={handleDifficultyCheckboxChange}/>
                   Hard
                 </label>
               </div>
@@ -141,8 +147,8 @@ const HomeComponent = () => {
                     id="format1" 
                     name="format" 
                     value="multiple-choice" 
-                    checked={selectedDifficulty === "multiple-choice"} 
-                    onChange={handleCheckboxChange}/>
+                    checked={selectedFormat === "multiple-choice"} 
+                    onChange={handleFormatCheckboxChange}/>
                   multiple-choice
                 </label>
                 <label htmlFor="format2">
@@ -151,8 +157,8 @@ const HomeComponent = () => {
                     id="format2" 
                     name="format" 
                     value="short-answer" 
-                    checked={selectedDifficulty === "short-answer"} 
-                    onChange={handleCheckboxChange}/>
+                    checked={selectedFormat === "short-answer"} 
+                    onChange={handleFormatCheckboxChange}/>
                   short-answer
                 </label>
                 <label htmlFor="format3">
@@ -161,8 +167,8 @@ const HomeComponent = () => {
                     id="format3" 
                     name="format" 
                     value="free-response" 
-                    checked={selectedDifficulty === "free-response"} 
-                    onChange={handleCheckboxChange}/>
+                    checked={selectedFormat === "free-response"} 
+                    onChange={handleFormatCheckboxChange}/>
                   free-response
                 </label>
               </div>
