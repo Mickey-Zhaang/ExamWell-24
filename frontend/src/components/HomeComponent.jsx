@@ -7,13 +7,15 @@ const HomeComponent = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
   const [selectedFormat, setSelectedFormat] = useState("");
 
-  const [isWindowVisible, setIsWindowVisible] = useState(false);
+  const [isParametersWindowVisible, setIsParametersWindowVisible] = useState(false);
+  const [isFinalWindowVisible, setIsFinalWindowVisible] = useState(false);
+
 
 
   const handleButtonClick = () => {
     axios.get("http://127.0.0.1:5000/api/button-message")
       .then(response => {
-        setIsWindowVisible(true);
+        setIsParametersWindowVisible(true);
       })
       .catch(error => {
         console.error("there was an error fetching the button message.", error)
@@ -36,6 +38,7 @@ const HomeComponent = () => {
     axios.post("http://127.0.0.1:5000/api/submit", data)
       .then(response => {
         console.log("Form submitted successfully:", response.data);
+        setIsFinalWindowVisible(true);
         event.target.reset();
         setSelectedDifficulty("");
         setSelectedFormat("");
@@ -55,13 +58,20 @@ const HomeComponent = () => {
   }
 
 
-  const closeSlidingWindow = () => {
-    setIsWindowVisible(false);
+  const closeParametersSlidingWindow = () => {
+    setIsParametersWindowVisible(false);
+  }
+
+  const closeFinalSlidingWindow = () => {
+    setIsFinalWindowVisible(false);
   }
 
 
   return (
+
+    
     <div className="home-wrapper">
+      {/* Home page*/}
       <div className="home">
         <h1 className="home__title">ExamWell</h1>
         <p className="home__statement"><i>"Efficient education achieved through the synergy of AI and human effort."</i></p>
@@ -70,10 +80,10 @@ const HomeComponent = () => {
       <span className="plus__sign">+</span> 
      </button>
 
-     {/* Sliding window for input*/}
-      <div className={`sliding-window ${isWindowVisible ? 'visible' : ''}`}>
+      {/* Sliding window for input*/}
+      <div className={`sliding-window ${isParametersWindowVisible ? 'visible' : ''}`}>
         <div className="sliding-window__content">
-          <button className="sliding-window__close" onClick={closeSlidingWindow}>Close</button>
+          <button className="sliding-window__close" onClick={closeParametersSlidingWindow}>Close</button>
           <div className="config_page">
             <h1 className="home__title">ExamWell</h1>
             <form onSubmit={handleSubmit} action="/submit" method="post" className="form-container">
@@ -191,6 +201,15 @@ const HomeComponent = () => {
             </form>
           </div>
         </div>
+      </div>
+    
+      {/* Sliding window for final page */}
+      <div className={`final-sliding-window ${isFinalWindowVisible ? 'visible' : ''}`}>
+        <div className="final-sliding-window__content">
+        <button className="sliding-window__close" onClick={closeFinalSlidingWindow}>Close</button>
+
+        </div>
+
       </div>
       
     </div>
