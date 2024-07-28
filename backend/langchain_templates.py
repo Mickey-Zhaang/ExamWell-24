@@ -9,7 +9,7 @@ load_dotenv()
 # SETTING UP THE LLMS
 # Generator creates the problem
 # Fact checker assesses the problem and provides feedback
-openai_api_key=os.getenv('OPENAI_API_KEY', 'secret-key') #insert key
+openai_api_key=os.getenv('OPENAI_API_KEY', 'sk-proj-YOMkAxhndqYVm5i7NCdbT3BlbkFJyDAe7EQUY6aQyNTNxp8l') #insert key
 generator_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fact_checker_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
@@ -24,7 +24,7 @@ It should be a {type} and of level {difficulty}.
 Respond with just the exam problem
 """
 
-prompt = PromptTemplate(
+generator_prompt = PromptTemplate(
     input_variables=["subject", "topic", "type", "difficulty"],
     template=generator_template,
 )
@@ -42,27 +42,28 @@ You are a fact-checker for exam problems. Assess the following problem:
 4. Comment on the overall quality of the problem.
 
 Provide your feedback in the following JSON format:
-{
-    "solvability": {
+{{
+    "solvability": {{
         "isSolvable": boolean,
         "answer": "string",
         "comments": "string"
-    },
-    "correctness": {
+    }},
+    "correctness": {{
         "isCorrect": boolean,
         "comments": "string"
-    },
-    "parameters": {
+    }},
+    "parameters": {{
         "fitsDifficulty": boolean,
         "fitsTopic": boolean,
         "comments": "string"
-    },
-    "quality": {
+    }},
+    "quality": {{
         "isHighQuality": boolean,
         "comments": "string"
-    }
-}
+    }}
+}}
 """
+
 
 fact_check_prompt = PromptTemplate(
     input_variables=["problem", "topic", "difficulty"],

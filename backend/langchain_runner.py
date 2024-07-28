@@ -8,7 +8,7 @@ import json
 
 # Function to check if all booleans are True in the JSON feedback
 def is_feedback_positive(feedback):
-    return all(
+    return (
         feedback['solvability']['isSolvable'] and
         feedback['correctness']['isCorrect'] and
         feedback['parameters']['fitsDifficulty'] and
@@ -21,11 +21,11 @@ def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations
     for iteration in range(max_iterations):
         # Generate the problem
         generated_problem_prompt = generator_prompt.format(subject=subject, topic=topic, type=type, difficulty=difficulty)
-        generated_problem = generator_llm(generated_problem_prompt)
+        generated_problem = generator_llm.invoke(generated_problem_prompt)
 
         # Fact-check the problem
         fact_check_prompt_str = fact_check_prompt.format(problem=generated_problem, topic=topic, difficulty=difficulty)
-        fact_check_result = fact_checker_llm(fact_check_prompt_str)
+        fact_check_result = fact_checker_llm.invoke(fact_check_prompt_str)
         feedback = json.loads(fact_check_result)
 
         # Check if feedback is positive
@@ -33,21 +33,33 @@ def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations
             print(f"Generated Problem: {generated_problem}")
             print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
             return
-
+        
         # If feedback is not positive, fix the problem
         fixer_prompt_str = fixer_prompt.format(
             subject=subject, topic=topic, type=type, difficulty=difficulty,
             problem=generated_problem, json=json.dumps(feedback)
         )
         fixed_problem = fixer_llm(fixer_prompt_str)
+
+        # Fact-check the problem
+        fact_check_prompt_str = fact_check_prompt.format(problem=fixed_problem, topic=topic, difficulty=difficulty)
+        fact_check_result = fact_checker_llm.invoke(fact_check_prompt_str)
+        feedback = json.loads(fact_check_result)
+
+        # Check if feedback is positive
+        if is_feedback_positive(feedback):
+            print(f"Generated Problem: {fixed_problem}")
+            print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
+            return
+        
         print(f"Iteration {iteration+1} Feedback: {json.dumps(feedback, indent=4)}")
 
-    print("Failed to generate a valid problem after 3 iterations.")
+    print(f"Failed to generate a valid problem after {max_iterations} iterations.")
 
 # Example usage
-subject = "AP Calculus BC"
-topic = "optimization"
-type = "word problem"
-difficulty = "hard"
+# subject = "AP Calculus BC"
+# topic = "optimization"
+# type = "word problem"
+# difficulty = "hard"
 
-generate_fact_check_and_fix(subject, topic, type, difficulty)
+# generate_fact_check_and_fix(subject, topic, type, difficulty)
