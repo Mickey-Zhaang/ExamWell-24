@@ -10,6 +10,9 @@ const HomeComponent = () => {
   const [isParametersWindowVisible, setIsParametersWindowVisible] = useState(false);
   const [isFinalWindowVisible, setIsFinalWindowVisible] = useState(false);
 
+  const [submittedData, setSubmittedData] = useState(null);
+  const [isQuestionPopupVisible, setIsQuestionPopupVisible] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
 
 
   const handleButtonClick = () => {
@@ -38,6 +41,7 @@ const HomeComponent = () => {
     axios.post("http://127.0.0.1:5000/api/submit", data)
       .then(response => {
         console.log("Form submitted successfully:", response.data);
+        setSubmittedData(response.data.problems);
         setIsFinalWindowVisible(true);
         event.target.reset();
         setSelectedDifficulty("");
@@ -66,6 +70,14 @@ const HomeComponent = () => {
     setIsFinalWindowVisible(false);
   }
 
+  const openQuestionPopup = (question) => {
+    setSelectedQuestion(question);
+    setIsQuestionPopupVisible(true);
+  }
+
+  const closeQuestionPopup = () => {
+    setIsQuestionPopupVisible(false);
+  }
 
   return (
 
@@ -196,13 +208,38 @@ const HomeComponent = () => {
       {/* Sliding window for final page */}
       <div className={`final-sliding-window ${isFinalWindowVisible ? 'visible' : ''}`}>
         <div className="final-sliding-window__content">
-        <button className="sliding-window__close" onClick={closeFinalSlidingWindow}>Close</button>
-
+          <button className="sliding-window__close" onClick={closeFinalSlidingWindow}>Close</button>
+          <h1 className="home__title">ExamWell</h1>
+          <div className="scroll-pane">
+            <h1 className="ai_gen">AI Generated Questions:</h1>
+            {submittedData && (
+              <div className="question-list">
+                {submittedData.map((question, index) => (
+                  <div key={index} className="question-item" onClick={() => openQuestionPopup(question)}>
+                    <h1>Question {index + 1}</h1>
+                    {/* {questionData.verified && <span className="verified-sticker">Verified</span>} */}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-
       </div>
-      
+
+      {/* Question detail popup */}
+      <div className={`question-popup ${isQuestionPopupVisible ? 'visible' : ''}`}>
+        <div className="question-popup__content">
+          
+          {selectedQuestion && (
+            <div className="question-detail">
+              <button className="popup__close" onClick={closeQuestionPopup}>Close</button>
+              <p>{selectedQuestion}</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
+      
     
   );
 };

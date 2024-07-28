@@ -17,10 +17,10 @@ def is_feedback_positive(feedback):
     )
 
 # Chain logic to generate, fact-check, and fix problems
-def generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, max_iterations=3, verbose = False):
+def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals, max_iterations=3, verbose = False):
     for iteration in range(max_iterations):
         # Generate the problem
-        generated_problem_prompt = generator_prompt.format(subject=subject, topic=topic, type=type, difficulty=difficulty, additionals=additionals)
+        generated_problem_prompt = generator_prompt.format(subject=subject, topic=topic, type_of=type_of, difficulty=difficulty, additionals=additionals)
         generated_problem = generator_llm.invoke(generated_problem_prompt)
 
         # Fact-check the problem
@@ -37,7 +37,7 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, m
         
         # If feedback is not positive, fix the problem
         fixer_prompt_str = fixer_prompt.format(
-            subject=subject, topic=topic, type=type, difficulty=difficulty,
+            subject=subject, topic=topic, type_of=type_of, difficulty=difficulty,
             problem=generated_problem, additionals=additionals, json=json.dumps(feedback)
         )
         fixed_problem = fixer_llm(fixer_prompt_str)
@@ -62,11 +62,11 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, m
         print(f"Failed to generate a valid problem after {max_iterations} iterations.")
     return None
 
-def create_list(subject, topic, difficulty, type, additionals, num_in_list = 5, max_iterations=3, verbose = False):
+def create_list(subject, topic, difficulty, type_of, additionals, num_in_list = 5, max_iterations=3, verbose = False):
     i = 0
     problem_list = []
     while i <= num_in_list:
-        generated_problem = generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, max_iterations, verbose)
+        generated_problem = generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals, max_iterations, verbose)
         if generated_problem != None:
             i += 1
             problem_list.append(generated_problem)

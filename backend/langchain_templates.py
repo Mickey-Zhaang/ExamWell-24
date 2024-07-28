@@ -21,13 +21,13 @@ fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_ap
 # Prompt template for generator
 generator_template = """
 Give me an exam problem based on the curriculum of {subject} about {topic}.
-It should be a {type} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank)
+It should be a {type_of} questions and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank)
 
 Respond with just the exam problem
 """
 
 generator_prompt = PromptTemplate(
-    input_variables=["subject", "topic", "type", "difficulty", "additionals"],
+    input_variables=["subject", "topic", "type_of", "difficulty", "additionals"],
     template=generator_template,
 )
 
@@ -74,7 +74,7 @@ fact_check_prompt = PromptTemplate(
 
 # Prompt template for fixer
 fixer_template = """
-The following exam problem is based on the curriculum of {subject} about {topic}. It should be a {type} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank) 
+The following exam problem is based on the curriculum of {subject} about {topic}. It should be a {type_of} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank) 
 Problem: "{problem}" . 
 The following json file contains feedback for this problem. For each category that has the boolean 'False', read the comment describing what is wrong.
 Rewrite the problem according to those comments.
@@ -84,6 +84,6 @@ Respond with just the exam problem.
 """
 
 fixer_prompt = PromptTemplate(
-    input_variables=["subject", "topic", "type", "difficulty", "additionals", "problem", "json"],
+    input_variables=["subject", "topic", "type_of", "difficulty", "additionals", "problem", "json"],
     template=fixer_template,
 )

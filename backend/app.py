@@ -19,12 +19,10 @@ def submit():
     type_of = data["format"]
     additionals = data["additionals"]
     
-    problem_list = create_list(subject=subject, topic=topic, difficulty=difficulty, type=type_of, additionals=additionals)
-    
-    print(problem_list)
-    
+    problem_list = create_list(subject=subject, topic=topic, difficulty=difficulty, type_of=type_of, additionals=additionals)
+    print("done with creation")
     # json_data = generate_fact_check_and_fix()
-    return jsonify({"message": "Form submitted successfully!"}), 200
+    return jsonify({"problems" : problem_list})
 
 
 if __name__ == '__main__':
