@@ -19,16 +19,15 @@ fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_ap
 # PROMPT ENGINEERING
 
 # Prompt template for generator
-# (mickey) something like: ...with these additional parameters {additionals}
 generator_template = """
 Give me an exam problem based on the curriculum of {subject} about {topic}.
-It should be a {type} and of level {difficulty}.
+It should be a {type} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank)
 
 Respond with just the exam problem
 """
 
 generator_prompt = PromptTemplate(
-    input_variables=["subject", "topic", "type", "difficulty"],
+    input_variables=["subject", "topic", "type", "difficulty", "additionals"],
     template=generator_template,
 )
 
@@ -39,7 +38,7 @@ fact_check_template = """
 You are a fact-checker for exam problems. Assess the following problem:
 "{problem}"
 
-1. Check if the problem is solvable. Provide the answer if it is solveable. If it is not solveable, provide comments about why it is not. 
+1. Check if the problem is solvable. Provide the answer if it is solvable. If it is not solvable, provide comments about why it is not. 
 2. Verify the factual correctness of the problem. If it is incorrect, provide comments about why it is not factually correct.
 3. Assess if the problem fits the given difficulty level and topic. If it does not, provide comments as to why it does not fit.
 4. Comment on the overall quality of the problem.
@@ -63,6 +62,7 @@ Provide your feedback in the following JSON format:
     "quality": {{
         "isHighQuality": boolean,
         "comments": "string"
+        "utilizes all additional parameters": boolean
     }}
 }}
 """
@@ -75,7 +75,7 @@ fact_check_prompt = PromptTemplate(
 
 # Prompt template for fixer
 fixer_template = """
-The following exam problem is based on the curriculum of {subject} about {topic}. It should be a {type} and of level {difficulty}. 
+The following exam problem is based on the curriculum of {subject} about {topic}. It should be a {type} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank) 
 Problem: "{problem}" . 
 The following json file contains feedback for this problem. For each category that has the boolean 'False', read the comment describing what is wrong.
 Rewrite the problem according to those comments.
@@ -83,6 +83,6 @@ JSON feedback file: "{json}".
 """
 
 fixer_prompt = PromptTemplate(
-    input_variables=["subject", "topic", "type", "difficulty", "problem", "json"],
+    input_variables=["subject", "topic", "type", "difficulty", "additionals", "problem", "json"],
     template=fixer_template,
 )

@@ -17,14 +17,14 @@ def is_feedback_positive(feedback):
     )
 
 # Chain logic to generate, fact-check, and fix problems
-def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations=3):
+def generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, max_iterations=3):
     for iteration in range(max_iterations):
         # Generate the problem
-        generated_problem_prompt = generator_prompt.format(subject=subject, topic=topic, type=type, difficulty=difficulty)
+        generated_problem_prompt = generator_prompt.format(subject=subject, topic=topic, type=type, difficulty=difficulty, additionals=additionals)
         generated_problem = generator_llm.invoke(generated_problem_prompt)
 
         # Fact-check the problem
-        fact_check_prompt_str = fact_check_prompt.format(problem=generated_problem, topic=topic, difficulty=difficulty)
+        fact_check_prompt_str = fact_check_prompt.format(problem=generated_problem, topic=topic, difficulty=difficulty, additionals=additionals)
         fact_check_result = fact_checker_llm.invoke(fact_check_prompt_str)
         feedback = json.loads(fact_check_result)
 
@@ -37,7 +37,7 @@ def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations
         # If feedback is not positive, fix the problem
         fixer_prompt_str = fixer_prompt.format(
             subject=subject, topic=topic, type=type, difficulty=difficulty,
-            problem=generated_problem, json=json.dumps(feedback)
+            problem=generated_problem, additionals=additionals, json=json.dumps(feedback)
         )
         fixed_problem = fixer_llm(fixer_prompt_str)
 
@@ -56,10 +56,11 @@ def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations
 
     print(f"Failed to generate a valid problem after {max_iterations} iterations.")
 
-# # Example usage
-# subject = "AP Calculus BC"
-# topic = "optimization"
-# type = "word problem"
-# difficulty = "hard"
+# Example usage
+subject = "AP Calculus BC"
+topic = "optimization"
+type = "word problem"
+difficulty = "hard"
+additionals = "pythagorean theorem"
 
-# generate_fact_check_and_fix(subject, topic, type, difficulty)
+generate_fact_check_and_fix(subject, topic, type, difficulty, additionals)

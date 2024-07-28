@@ -107,16 +107,6 @@ const HomeComponent = () => {
                   placeholder="Enter the topic"
                   required
                 />
-                <div></div>
-                <label htmlFor="Grade Level">Grade Level:</label>
-                <input
-                  type="text"
-                  id="grade"
-                  name="grade"
-                  className="what_grade"
-                  placeholder="Enter grade level"
-                  required
-                />
               </div>
               <h3>Difficulty:</h3>
               <div className="checkbox-container">
