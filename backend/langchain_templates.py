@@ -9,7 +9,7 @@ load_dotenv()
 # SETTING UP THE LLMS
 # Generator creates the problem
 # Fact checker assesses the problem and provides feedback
-openai_api_key=os.getenv('OPENAI_API_KEY', 'sk-proj-YOMkAxhndqYVm5i7NCdbT3BlbkFJyDAe7EQUY6aQyNTNxp8l') #insert key
+openai_api_key=os.getenv('OPENAI_API_KEY', '') #insert key
 generator_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fact_checker_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
