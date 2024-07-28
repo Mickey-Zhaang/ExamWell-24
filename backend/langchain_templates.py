@@ -67,7 +67,6 @@ Provide your feedback in the following JSON format:
 }}
 """
 
-
 fact_check_prompt = PromptTemplate(
     input_variables=["problem", "topic", "difficulty"],
     template=fact_check_template,
@@ -80,6 +79,8 @@ Problem: "{problem}" .
 The following json file contains feedback for this problem. For each category that has the boolean 'False', read the comment describing what is wrong.
 Rewrite the problem according to those comments.
 JSON feedback file: "{json}".
+
+Respond with just the exam problem.
 """
 
 fixer_prompt = PromptTemplate(

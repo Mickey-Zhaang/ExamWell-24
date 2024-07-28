@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from langchain_runner import generate_fact_check_and_fix
+from langchain_runner import create_list
 
 app = Flask(__name__)
 CORS(app)
@@ -19,9 +19,9 @@ def submit():
     type_of = data["format"]
     additionals = data["additionals"]
     
-    # json_questions = generate_fact_check_and_fix(subject=subject, topic=topic, difficulty=difficulty, type=type_of, additionals=additionals)
+    problem_list = create_list(subject=subject, topic=topic, difficulty=difficulty, type=type_of, additionals=additionals)
     
-    # print(json_questions)
+    print(problem_list)
     
     # json_data = generate_fact_check_and_fix()
     return jsonify({"message": "Form submitted successfully!"}), 200
