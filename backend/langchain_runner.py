@@ -50,9 +50,11 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type, additionals, m
         if is_feedback_positive(feedback):
             print(f"Generated Problem: {fixed_problem}")
             print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
-            return
+            return 
         
         print(f"Iteration {iteration+1} Feedback: {json.dumps(feedback, indent=4)}")
+        return 
+        
 
     print(f"Failed to generate a valid problem after {max_iterations} iterations.")
 
