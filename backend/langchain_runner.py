@@ -57,9 +57,9 @@ def generate_fact_check_and_fix(subject, topic, type, difficulty, max_iterations
     print(f"Failed to generate a valid problem after {max_iterations} iterations.")
 
 # Example usage
-# subject = "AP Calculus BC"
-# topic = "optimization"
-# type = "word problem"
-# difficulty = "hard"
+subject = "AP Calculus BC"
+topic = "optimization"
+type = "word problem"
+difficulty = "hard"
 
-# generate_fact_check_and_fix(subject, topic, type, difficulty)
+generate_fact_check_and_fix(subject, topic, type, difficulty)

@@ -3,13 +3,24 @@ import os
 from langchain_openai import ChatOpenAI, OpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 from langchain.prompts import PromptTemplate
+import configparser
 
 load_dotenv()
+
+
+#-----------Hidden----------
+#This is my doing so I can use the API key using config.ini
+config = configparser.ConfigParser()
+
+config.read('config.ini')
+
+openai_api_key = config['openai']['api_key']
+#---------------------------
 
 # SETTING UP THE LLMS
 # Generator creates the problem
 # Fact checker assesses the problem and provides feedback
-openai_api_key=os.getenv('OPENAI_API_KEY', '') #insert key
+# openai_api_key=os.getenv('OPENAI_API_KEY', openai_api_key) # uncomment for this to work for you @katie
 generator_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fact_checker_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
 fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_api_key)
@@ -17,6 +28,7 @@ fixer_llm = OpenAI(model_name="gpt-3.5-turbo-instruct", openai_api_key=openai_ap
 # PROMPT ENGINEERING
 
 # Prompt template for generator
+# (mickey) something like: ...with these additional parameters {additionals}
 generator_template = """
 Give me an exam problem based on the curriculum of {subject} about {topic}.
 It should be a {type} and of level {difficulty}.
