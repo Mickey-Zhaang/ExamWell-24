@@ -23,7 +23,22 @@ generator_template = """
 Give me an exam problem based on the curriculum of {subject} about {topic}.
 It should be a {type_of} questions and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank)
 
-Respond with just the exam problem
+Provide the exam problem in the following JSON format:
+Use a descriptive summary of the problem for the title and answer either true or false with a 50 percent chance either way for Verification.
+{{
+    "Descriptive Title": {{
+        "Title": string
+    }},
+    "Problem": {{
+        "Problem": string
+    }},
+    "Answer": {{
+        "Answer": string
+    }},
+    "Verification": {{
+        "verified": boolean
+    }}
+}}
 """
 
 generator_prompt = PromptTemplate(
@@ -35,7 +50,7 @@ generator_prompt = PromptTemplate(
 
 # Prompt template for 
 fact_check_template = """
-You are a fact-checker for exam problems. Assess the following problem:
+You are a fact-checker for exam problems. Assess the following problem found in the problem section of the following json:
 "{problem}"
 
 1. Check if the problem is solvable. Provide the answer if it is solvable. If it is not solvable, provide comments about why it is not. 
@@ -75,12 +90,27 @@ fact_check_prompt = PromptTemplate(
 # Prompt template for fixer
 fixer_template = """
 The following exam problem is based on the curriculum of {subject} about {topic}. It should be a {type_of} and of level {difficulty}. Additional parameters that should be used include: {additionals} (ignore if blank) 
-Problem: "{problem}" . 
+Read the problem in the problem section of the following json "{problem}" . 
 The following json file contains feedback for this problem. For each category that has the boolean 'False', read the comment describing what is wrong.
 Rewrite the problem according to those comments.
 JSON feedback file: "{json}".
 
-Respond with just the exam problem.
+Provide the exam problem in the following JSON format:
+Use a descriptive summary of the problem for the title and answer either true or false with a 50 percent chance either way for Verification.
+{{
+    "Descriptive Title": {{
+        "Title": string
+    }},
+    "Problem": {{
+        "Problem": string
+    }},
+    "Answer": {{
+        "Answer": string
+    }},
+    "Verification": {{
+        "verified": boolean
+    }}
+}}
 """
 
 fixer_prompt = PromptTemplate(
