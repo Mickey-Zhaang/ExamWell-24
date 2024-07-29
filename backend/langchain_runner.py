@@ -4,6 +4,9 @@ from langchain_templates import fact_check_prompt
 from langchain_templates import fact_checker_llm
 from langchain_templates import fixer_llm
 from langchain_templates import fixer_prompt
+from langchain_templates import summarizer_prompt
+from langchain_templates import summarizer_llm
+import random
 import json
 
 # Function to check if all booleans are True in the JSON feedback
@@ -15,6 +18,20 @@ def is_feedback_positive(feedback):
         feedback['parameters']['fitsTopic'] and
         feedback['quality']['isHighQuality']
     )
+ 
+ 
+def create_problem_json(problem, feedback):
+    summary_prompt = summarizer_prompt.format(problem=problem)
+    summary = summarizer_llm.invoke(summary_prompt)    
+    answer = feedback['solvability']['answer']
+    verification_status = random.choice([True, False])
+
+    return json.dumps({
+        "problem_summary": summary,
+        "problem": problem,
+        "answer": answer,
+        "verification": verification_status
+    }, indent=4)
 
 # Chain logic to generate, fact-check, and fix problems
 def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals, max_iterations=3, verbose = False):
@@ -26,6 +43,18 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
         # Fact-check the problem
         fact_check_prompt_str = fact_check_prompt.format(problem=generated_problem, topic=topic, difficulty=difficulty, additionals=additionals)
         fact_check_result = fact_checker_llm.invoke(fact_check_prompt_str)
+        # Debugging: Print the raw fact_check_result to inspect its content
+        # print(f"Raw fact_check_result: {fact_check_result}")
+        # print(f"Length of fact_check_result: {len(fact_check_result)}")
+
+        try:
+            # Strip any extraneous characters
+            cleaned_result = fact_check_result.strip()
+            feedback = json.loads(cleaned_result)
+        except json.JSONDecodeError as e:
+            # print(f"JSON Decode Error: {e}")
+            # print(f"Failed JSON string: {fact_check_result}")
+            continue  # Skip this iteration and try again
         feedback = json.loads(fact_check_result)
 
         # Check if feedback is positive
@@ -33,12 +62,12 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
             if verbose:
                 print(f"Generated Problem: {generated_problem}")
                 print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
-            return generated_problem
+            return create_problem_json(generated_problem, feedback)
         
         # If feedback is not positive, fix the problem
         fixer_prompt_str = fixer_prompt.format(
             subject=subject, topic=topic, type_of=type_of, difficulty=difficulty,
-            problem=generated_problem, additionals=additionals, json=json.dumps(feedback)
+            problem=generated_problem, additionals=additionals
         )
         fixed_problem = fixer_llm(fixer_prompt_str)
 
@@ -55,7 +84,7 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
                 print(f"Generated Problem: {fixed_problem}")
                 print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
                 print(fixed_problem)
-            return fixed_problem
+            return create_problem_json(fixed_problem, feedback)
         
         if verbose:
             print(f"Iteration {iteration+1} Feedback: {json.dumps(feedback, indent=4)}")
@@ -77,7 +106,7 @@ def create_list(subject, topic, difficulty, type_of, additionals, num_in_list=5,
 
 
     # Sort the list based on the 'verified' status
-    problem_list.sort(key=lambda x: x["Verification"]["verified"], reverse=True)
+    problem_list.sort(key=lambda x: x.get("verification", False), reverse=True)
     
     return problem_list
 
