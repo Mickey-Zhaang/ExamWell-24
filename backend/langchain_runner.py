@@ -45,6 +45,8 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
         # Fact-check the problem
         fact_check_prompt_str = fact_check_prompt.format(problem=fixed_problem, topic=topic, difficulty=difficulty)
         fact_check_result = fact_checker_llm.invoke(fact_check_prompt_str)
+        print(feedback)
+        print(fact_check_result)
         feedback = json.loads(fact_check_result)
 
         # Check if feedback is positive
@@ -52,6 +54,7 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
             if verbose:
                 print(f"Generated Problem: {fixed_problem}")
                 print(f"Fact-check Feedback: {json.dumps(feedback, indent=4)}")
+                print(fixed_problem)
             return fixed_problem
         
         if verbose:
@@ -62,25 +65,35 @@ def generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals
         print(f"Failed to generate a valid problem after {max_iterations} iterations.")
     return None
 
-def create_list(subject, topic, difficulty, type_of, additionals, num_in_list = 5, max_iterations=3, verbose = False):
+def create_list(subject, topic, difficulty, type_of, additionals, num_in_list=5, max_iterations=3, verbose=False):
     i = 0
     problem_list = []
-    while i <= num_in_list:
+    while i < num_in_list:
         generated_problem = generate_fact_check_and_fix(subject, topic, difficulty, type_of, additionals, max_iterations, verbose)
-        if generated_problem != None:
+        if generated_problem is not None:
             i += 1
-            problem_list.append(generated_problem)
-            
+            parsed_problem = json.loads(generated_problem)
+            problem_list.append(parsed_problem)
+
+
     # Sort the list based on the 'verified' status
     problem_list.sort(key=lambda x: x["Verification"]["verified"], reverse=True)
     
     return problem_list
 
-# # Example usage
-# subject = "AP Calculus BC"
-# topic = "optimization"
-# type = "word problem"
-# difficulty = "hard"
-# additionals = "pythagorean theorem"
+# Example usage
+subject = "AP Calculus BC"
+topic = "optimization"
+type_of = "word problem"
+difficulty = "hard"
+additionals = "pythagorean theorem"
 
-# generate_fact_check_and_fix(subject, topic, type, difficulty, additionals)
+problems = create_list(subject, topic, type_of, difficulty, additionals)
+
+for i, e in enumerate(problems):
+    print(f"problem {i + 1}:\n {e}")
+    
+
+
+
+# outputs : question1 {'Descriptive Title': {'Title': 'Optimizing Fence Dimensions'}, 'Problem': {'Problem': 'A farmer wants to enclose a rectangular pasture with an area of 1200 square feet. She only has 200 feet of fencing material. What dimensions should the pasture have to maximize the enclosed area?'}, 'Answer': {'Answer': 'The dimensions of the pasture should be 60 feet by 20 feet.'}, 'Verification': {'verified': True}},
