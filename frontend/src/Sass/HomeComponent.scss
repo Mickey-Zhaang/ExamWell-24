@@ -246,7 +246,7 @@ html {
   position: fixed;
   top: 0;
   right: 0;
-  width: 50%;
+  width: 80%;
   height: 100vh;
   background-color: white;
   box-shadow: -2px 0 5px rgba(0,0,0,0.5);
@@ -269,6 +269,98 @@ html {
     border: none;
     font-size: 16px;
     cursor: pointer;
+    z-index: 1001; /* Ensure the button is above the popup content */
   }
   
+}
+
+.verified-sticker {
+  display: inline-block;
+  padding: 5px 10px;
+  color: #fff;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-left: 5px;
+}
+
+.black-line {
+  border: none;
+  height: 1px;
+  background-color: rgb(78, 95, 245);
+  margin-top: 30px;
+}
+
+.question_popup_titles {
+  margin-bottom: 20px;
+}
+
+.vote-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Adjust this value as needed */
+}
+
+.vote-button {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.vote-button:hover {
+  background-color: #e1e1e1;
+}
+
+.upvote {
+  color: green;
+}
+
+.downvote {
+  color: red;
+}
+
+.vote_count{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.loading-screen {
+  position: fixed;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000; /* Ensure it's above all other elements */
+}
+
+.loading_text {
+  color: white; /* Make the text white */
+  margin-top: 20px; /* Add some space above the text */
+  font-size: 18px; /* Adjust the font size as needed */
+}
+
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
