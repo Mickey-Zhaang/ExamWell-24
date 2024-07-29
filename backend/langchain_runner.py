@@ -70,6 +70,10 @@ def create_list(subject, topic, difficulty, type_of, additionals, num_in_list = 
         if generated_problem != None:
             i += 1
             problem_list.append(generated_problem)
+            
+    # Sort the list based on the 'verified' status
+    problem_list.sort(key=lambda x: x["Verification"]["verified"], reverse=True)
+    
     return problem_list
 
 # # Example usage
