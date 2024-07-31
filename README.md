@@ -1,4 +1,4 @@
-# ExamWell-24
+# ExamWell
 
 <b><u>Authors:</u></b> Katie Bernard and Mickey Zhang
 
