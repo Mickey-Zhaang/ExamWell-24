@@ -13,7 +13,16 @@ const HomeComponent = () => {
   const [submittedData, setSubmittedData] = useState(null);
   const [isQuestionPopupVisible, setIsQuestionPopupVisible] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [voteCount, setVoteCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
+
+  const LoadingScreen = () => (
+    <div className="loading-screen">
+      <div className="spinner"></div>
+      <p className="loading_text">Generating questions...</p>
+    </div>
+  );
 
   const handleButtonClick = () => {
     axios.get("http://127.0.0.1:5000/api/button-message")
@@ -27,6 +36,8 @@ const HomeComponent = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent the default form submission
+
+    setIsLoading(true); // Set loading state to true
 
     // Create a FormData object from the form element
     const formData = new FormData(event.target);
@@ -43,6 +54,7 @@ const HomeComponent = () => {
         console.log("Form submitted successfully:", response.data);
         setSubmittedData(response.data.problems);
         setIsFinalWindowVisible(true);
+        setIsLoading(false); // Set loading state to false
         event.target.reset();
         setSelectedDifficulty("");
         setSelectedFormat("");
@@ -50,6 +62,7 @@ const HomeComponent = () => {
       })
       .catch(error => {
         console.error("There was an error submitting the form:", error);
+        setIsLoading(false); // Set loading state to false
       });
   };
 
@@ -79,10 +92,19 @@ const HomeComponent = () => {
     setIsQuestionPopupVisible(false);
   }
 
+  const handleUpvote = () => {
+    setVoteCount(voteCount + 1);
+  }
+
+  const handleDownvote = () => {
+    setVoteCount(voteCount - 1);
+  }
+
   return (
 
     
     <div className="home-wrapper">
+      {isLoading && <LoadingScreen />}
       {/* Home page*/}
       <div className="home">
         <h1 className="home__title">ExamWell</h1>
@@ -93,6 +115,7 @@ const HomeComponent = () => {
      </button>
 
       {/* Sliding window for input*/}
+
       <div className={`sliding-window ${isParametersWindowVisible ? 'visible' : ''}`}>
         <div className="sliding-window__content">
           <button className="sliding-window__close" onClick={closeParametersSlidingWindow}>Close</button>
@@ -211,13 +234,13 @@ const HomeComponent = () => {
           <button className="sliding-window__close" onClick={closeFinalSlidingWindow}>Close</button>
           <h1 className="home__title">ExamWell</h1>
           <div className="scroll-pane">
-            <h1 className="ai_gen">AI Generated Questions:</h1>
+            <h1 className="ai_gen">Questions Tailored Just For You</h1>
             {submittedData && (
               <div className="question-list">
                 {submittedData.map((question, index) => (
                   <div key={index} className="question-item" onClick={() => openQuestionPopup(question)}>
-                    <h1>Question {index + 1}</h1>
-                    {/* {questionData.verified && <span className="verified-sticker">Verified</span>} */}
+                    <h3>{question.problem_summary}</h3>
+                    {question.verification && <span className="verified-sticker">Verified</span>}
                   </div>
                 ))}
               </div>
@@ -229,17 +252,25 @@ const HomeComponent = () => {
       {/* Question detail popup */}
       <div className={`question-popup ${isQuestionPopupVisible ? 'visible' : ''}`}>
         <div className="question-popup__content">
-          
+        <button className="popup__close" onClick={closeQuestionPopup}>Close</button>
           {selectedQuestion && (
-            <div className="question-detail">
-              <button className="popup__close" onClick={closeQuestionPopup}>Close</button>
-              <p>{selectedQuestion}</p>
-            </div>
-          )}
+              <div className="question-detail">
+                <h2>Generated Problem</h2>
+                <p>{selectedQuestion.problem}</p>
+                <hr className="black-line"></hr>
+                <h2>Answer</h2>
+                <p>{selectedQuestion.answer}</p>
+                <hr className="black-line"></hr>
+                <div className="vote-buttons">
+                  <button className="vote-button upvote" onClick={handleUpvote}>Upvote</button>
+                  <p className="vote_count">{voteCount}</p>
+                  <button className="vote-button downvote" onClick={handleDownvote}>Downvote</button>
+                </div>
+              </div>
+            )}
         </div>
       </div>
     </div>
-      
     
   );
 };

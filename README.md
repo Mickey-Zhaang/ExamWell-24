@@ -1,38 +1,50 @@
-# ExamWell-24
+# ExamWell
 
-<b><u>Authors:</u></b> Katie Bernard, Kingsford Sarpong, Mickey Zhang
+<b><u>Authors:</u></b> Katie Bernard and Mickey Zhang
 
-<h1> Overview of Exam Well </h1>
+ExamWell is an AI-driven problem bank designed to help high school STEM teachers generate high-quality, diverse exam problems efficiently. By leveraging advanced language models and a robust multi-pass generation process, ExamWell provides teachers with customizable, accurate, and relevant exam questions, allowing them to focus more on teaching and less on exam preparation.
 
-<h2>Handling NPM Dependencies</h2>
+The development of ExamWell was driven by extensive customer interviews with high school STEM teachers. We identified key pain points such as time constraints, the need for quality control, and customization requirements. Our solution directly addresses these issues, ensuring that ExamWell meets the real needs of teachers.
 
-* Download nodejs from here https://nodejs.org/en, and into your program files
-* ensure that you add the nodejs file into your environmental PATH variables (Ask GPT it can help)
-* run `npm install` in the terminal of /ExamWell-24 to install all dependencies for NPM,
+<h2>Features</h2>
 
-<h2>Backend python dependencies</h2>
+- Customizable Problem Generation: Teachers can search for specific subjects, specify problem types (e.g., open response, multiple choice), and choose difficulty levels (easy, medium, hard).
 
-* run `python3 -m venv .venv` in the terminal of /ExamWell-24
-* run `pip install -r requirements.txt` in the same terminal to install all backend dependencies.
+- Multi-Pass Quality Assurance: ExamWell employs a multi-pass generation and evaluation process to guarantee top-quality problems.
+    - Initial Generation: Problems are generated using tested prompt engineering methods.
+    - Evaluation Pass: A larger model evaluates the generated problems for solvability, factfulness, fit to the teacher's requested parameters, and overall quality.
+    - Feedback Loop: Problems that do not meet the required standards are sent back to the generator for adjustments based on feedback. This cycle continues until the problem achieves optimal quality.
+- User-Friendly Interface: Easy-to-use interface for seamless problem generation and selection. (Still in MVP version)
 
+<h2>Getting Started</h2>
 
-<h2>How to Run</h2>
+<h3>Prerequisites</h3>
+Python 3.8 or later
+Pip
 
-* Once all dependencies have been installed, start a virtual environment (venv) by typing `source .venv/Scripts/activate` in the terminal
-* In /ExamWell-24 directory open terminal and type `cd backend` to move into /backend
-* run app.py through `python app.py` and split the terminal into 2 becuase we need this server running
-* use the second terminal to change directories back to /ExamWell-24 with `cd ..` and move into /frontend through `cd frontend`
-* there start the server with `npm run dev` and it should take you to the home page in your browser
+<h3>Installation</h3>
 
+- Clone the repository
+- Create a virtual environment
+- Install NPM dependencies with 'npm install'
+- Install the required packages with 'pip install -r requirements.txt'
 
-<h2> How to keep up to date with the main branch </h2> 
+<h3>Usage</h3>
 
-* First run `git stash` to stash any uncommitted changes you have worked on
+- In the backend directory, run app.py with `python app.py`
+- In a second terminal, move into the frontend directory and start the server with `npm run dev`
 
-* Check all your stashed changes with `git stash list`
+<h3>Contributing</h3>
+We welcome contributions from the community! Here's how you can get involved.
 
-* Keep up to date with the main branch with `git pull origin main`
+- Fork the repository
+- Create a new branch for your feature or bug fix
+- Commit your changes and push to your branch
+- Open a pull request and provide a detailed description of your changes
 
-* Apply any of ur changes with `git stash apply` if nothing major has been altered
+<h3>What's Next</h3>
 
-* Finally resolve any conflicts that may have arose from pulling
+- Finetuning different models on curriculums and problem sets for different subjects, such as AP Calculus, AP Physics, Geometry, etc.
+- Enhanced User Interface
+- Creating a database for teacher-verified questions
+- Building user log-ins

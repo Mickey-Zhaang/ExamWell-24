@@ -110,17 +110,17 @@ def create_list(subject, topic, difficulty, type_of, additionals, num_in_list=5,
     
     return problem_list
 
-# Example usage
-subject = "AP Calculus BC"
-topic = "optimization"
-type_of = "word problem"
-difficulty = "hard"
-additionals = "pythagorean theorem"
+# # Example usage
+# subject = "AP Calculus BC"
+# topic = "optimization"
+# type_of = "word problem"
+# difficulty = "hard"
+# additionals = "pythagorean theorem"
 
-problems = create_list(subject, topic, type_of, difficulty, additionals)
+# problems = create_list(subject, topic, type_of, difficulty, additionals)
 
-for i, e in enumerate(problems):
-    print(f"problem {i + 1}:\n {e}")
+# for i, e in enumerate(problems):
+#     print(f"problem {i + 1}:\n {e}")
     
 
 
